@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="text-center alert alert-info">User Registration</h4>
+            {% if msg in msg %}
+            <h4 class="text-center alert alert-success">{{msg}}</h4>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Submit" class="btn btn-success">
+            </form>
+        </div>
+        <div class="col-md-6">
+<!--            <h4 class="text-center">Show User</h4>-->
+            {% if data %}
+                        <h4 class="text-center alert alert-info">User Data</h4>
+                        <table class="table table-hover">
+                             <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Passsword</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for  d in data %}
+
+                <tr>
+                  <th scope="row">{{d.id}}</th>
+                  <td>{{d.name}}</td>
+                  <td>{{d.email}}</td>
+                  <td>{{d.password}}</td>
+                    <td><a href="{% url 'update' d.id %}" class="btn btn-warning">Edit</a>  &nbsp;
+                    <a href="{% url 'delete' d.id %}" class="btn btn-danger">Delete</a> </td>
+                </tr>
+              {% endfor %}
+
+              </tbody>
+            </table>
+            {% else %}
+            <h4 class="text-center alert alert-warning">No data in User Table</h4>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
